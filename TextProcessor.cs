@@ -16,8 +16,13 @@ public class TextProcessor
         ofd.Multiselect = true;//Допускается выбор нескольких файлов
         if (ofd.ShowDialog() == DialogResult.OK)//Показать диалог, и если файлы выбраны
         {
-            string[] tempOutFileNames;//Массив путей к сохраненным временным выходным файлам
-            tempOutFileNames = processText(ofd.FileNames, MinNumOfLetters, DelPunctuationMarks);	//Обработка входных файлов и сохранение результата во
+            StringBuilder[] tempOutFileNames;//Массив путей к сохраненным временным выходным файлам
+            StringBuilder[] OFDFileNames = new StringBuilder[ofd.FileNames.Length];//Массив строк имен выбранных входных файлов
+            for (int i = 0; i < ofd.FileNames.Length; i++)
+            {
+                OFDFileNames[i]=new StringBuilder(ofd.FileNames[i]);
+            }
+            tempOutFileNames = processText(OFDFileNames, MinNumOfLetters, DelPunctuationMarks);	//Обработка входных файлов и сохранение результата во
             //временные файлы с именами "..._temp"
             SaveFileDialog sfd = new SaveFileDialog();//Создание объекта стандартного диалога сохранения файла
             // Сохранение результата обработки текстовых файлов
@@ -25,49 +30,50 @@ public class TextProcessor
             {
                 //Заголовок диалога сохранения файла
                 sfd.Title = "Сохранить результат обработки файла " + ofd.SafeFileNames[i];
+                sfd.FileName = "_"+ofd.SafeFileNames[i];
                 if (sfd.ShowDialog() == DialogResult.OK)//Показать диалог, и если имена файлов выбраны
                 {
                     //Копирует временный файл в заданный пользователем
-                    File.Copy(tempOutFileNames[i], sfd.FileName, true);
+                    File.Copy(tempOutFileNames[i].ToString(), sfd.FileName, true);
                 }
             }
             //Удаляем временные файлы
             for (int i = 0; i < tempOutFileNames.Length; i++)//По всем именам временных файлов
             {
-                File.Delete(tempOutFileNames[i]);
+                File.Delete(tempOutFileNames[i].ToString());
             }
         }
 	}
 
     //Функция обработки и сохранения текста
-    public static string[] processText(string[] inFileNames, int minChars, CheckState DelPunctuationMarks)
+    public static StringBuilder[] processText(StringBuilder[] inFileNames, int minChars, CheckState DelPunctuationMarks)
     {
         Encoding enc = Encoding.GetEncoding(1251);
         //Проверка необходимости удаления знаков препинания
         bool delPunct = (DelPunctuationMarks == CheckState.Checked) ? true : false;
         FileStream fsIn;//Поток очередного входного файла
         StreamReader r;//Объект для чтения входного потока
-        string[] tempOutFileNames = new string[inFileNames.Length];
+        StringBuilder[] tempOutFileNames = new StringBuilder[inFileNames.Length];
         FileStream fsOut;//Поток очередного выходного файла
         StreamWriter w;//Объект для записи выходного потока
-        string CurWord;//Текущее слово, читаемое из входного файла
+        StringBuilder CurWord;//Текущее слово, читаемое из входного файла
         int charsInCurWord;//Зафиксированное текущее количество букв и цифр в текущем слове
         char c;//прочитанный из текущего входного файла текущий символ
-        CurWord = "";
+        CurWord = new StringBuilder("");
         charsInCurWord = 0;
         for (int i = 0; i < inFileNames.Length; i++)//По всем именам входных файлов
         {
-            fsIn = new FileStream(inFileNames[i], FileMode.Open, FileAccess.Read);//Поток очередного входного файла
+            fsIn = new FileStream(inFileNames[i].ToString(), FileMode.Open, FileAccess.Read);//Поток очередного входного файла
             r = new StreamReader(fsIn, enc);
-            tempOutFileNames[i] = inFileNames[i] + "_temp";
-            fsOut = new FileStream(tempOutFileNames[i], FileMode.OpenOrCreate, FileAccess.Write);
+            tempOutFileNames[i] = inFileNames[i].Append("_temp");
+            fsOut = new FileStream(tempOutFileNames[i].ToString(), FileMode.OpenOrCreate, FileAccess.Write);
             w = new StreamWriter(fsOut, enc);
             while (r.Peek() >= 0)//пока не конец входного файла (-1)
             {
                 c = (char)r.Read();
                 if (!(Char.IsPunctuation(c) || Char.IsSeparator(c) || Char.IsControl(c)))//если символ - часть слова
                 {
-                    CurWord += c.ToString();
+                    CurWord.Append(c.ToString());
                     charsInCurWord++;
                 }
                 else//если знак препинания, разделитель или управляющий символ
@@ -82,7 +88,7 @@ public class TextProcessor
                         w.Write(c);//Запись считанного символа в выходной файл				
                     }
                     //Подготовка к чтению следующего слова
-                    CurWord = "";
+                    CurWord.Clear();
                     charsInCurWord = 0;
                 }
 
@@ -93,7 +99,7 @@ public class TextProcessor
                 w.Write(CurWord);
             }
             //Подготовка к чтению следующего файла
-            CurWord = "";
+            CurWord.Clear();
             charsInCurWord = 0;
             w.Flush();//Очищает буферы и записывает их в устройство
             w.Close();
