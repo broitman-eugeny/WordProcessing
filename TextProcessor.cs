@@ -64,48 +64,51 @@ public class TextProcessor
         for (int i = 0; i < inFileNames.Length; i++)//По всем именам входных файлов
         {
             fsIn = new FileStream(inFileNames[i].ToString(), FileMode.Open, FileAccess.Read);//Поток очередного входного файла
-            r = new StreamReader(fsIn, enc);
-            tempOutFileNames[i] = inFileNames[i].Append("_temp");
-            fsOut = new FileStream(tempOutFileNames[i].ToString(), FileMode.OpenOrCreate, FileAccess.Write);
-            w = new StreamWriter(fsOut, enc);
-            while (r.Peek() >= 0)//пока не конец входного файла (-1)
+            using (r = new StreamReader(fsIn, enc))//Использование конструкции using, чтобы освободить неуправляемые ресурсы в случае возникновения исключения
             {
-                c = (char)r.Read();
-                if (!(Char.IsPunctuation(c) || Char.IsSeparator(c) || Char.IsControl(c)))//если символ - часть слова
+                tempOutFileNames[i] = inFileNames[i].Append("_temp");
+                fsOut = new FileStream(tempOutFileNames[i].ToString(), FileMode.OpenOrCreate, FileAccess.Write);
+                using (w = new StreamWriter(fsOut, enc))//Использование конструкции using, чтобы освободить неуправляемые ресурсы в случае возникновения исключения
                 {
-                    CurWord.Append(c.ToString());
-                    charsInCurWord++;
-                }
-                else//если знак препинания, разделитель или управляющий символ
-                {
+                    while (r.Peek() >= 0)//пока не конец входного файла (-1)
+                    {
+                        c = (char)r.Read();
+                        if (!(Char.IsPunctuation(c) || Char.IsSeparator(c) || Char.IsControl(c)))//если символ - часть слова
+                        {
+                            CurWord.Append(c.ToString());
+                            charsInCurWord++;
+                        }
+                        else//если знак препинания, разделитель или управляющий символ
+                        {
+                            if (charsInCurWord >= minChars)
+                            {
+                                w.Write(CurWord);//Запись считанного длинного слова в выходной файл
+                            }
+                            //либо знаки препинания не удаляются, либо считанный символ - не знак препинания
+                            if (!(Char.IsPunctuation(c) && delPunct))
+                            {
+                                w.Write(c);//Запись считанного символа в выходной файл				
+                            }
+                            //Подготовка к чтению следующего слова
+                            CurWord.Clear();
+                            charsInCurWord = 0;
+                        }
+                    }
+                    //Запись последнего длинного считанного слова
                     if (charsInCurWord >= minChars)
                     {
-                        w.Write(CurWord);//Запись считанного длинного слова в выходной файл
+                        w.Write(CurWord);
                     }
-                    //либо знаки препинания не удаляются, либо считанный символ - не знак препинания
-                    if (!(Char.IsPunctuation(c) && delPunct))
-                    {
-                        w.Write(c);//Запись считанного символа в выходной файл				
-                    }
-                    //Подготовка к чтению следующего слова
+                    //Подготовка к чтению следующего файла
                     CurWord.Clear();
                     charsInCurWord = 0;
+                    w.Flush();//Очищает буферы и записывает их в устройство
+                    w.Close();
+                    fsOut.Close();
+                    r.Close();
+                    fsIn.Close();
                 }
-
             }
-            //Запись последнего длинного считанного слова
-            if (charsInCurWord >= minChars)
-            {
-                w.Write(CurWord);
-            }
-            //Подготовка к чтению следующего файла
-            CurWord.Clear();
-            charsInCurWord = 0;
-            w.Flush();//Очищает буферы и записывает их в устройство
-            w.Close();
-            fsOut.Close();
-            r.Close();
-            fsIn.Close();
         }
         return tempOutFileNames;
     }
