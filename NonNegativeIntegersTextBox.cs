@@ -25,4 +25,10 @@ class NonNegativeIntegersTextBox : TextBox
     {
         return new StringBuilder(this.Text);
     }
+
+    //Получить численное значение NonNegativeIntegersTextBox
+    public int getIntValNNITB()
+    {
+        return (this.Text == "") ? 0 : Convert.ToInt32(this.Text);
+    }    
 }
