@@ -1,18 +1,18 @@
-//Тестовое задание «Разработчик C#»
-//Задание №1
-//Программа для обработки текста
+//РўРµСЃС‚РѕРІРѕРµ Р·Р°РґР°РЅРёРµ В«Р Р°Р·СЂР°Р±РѕС‚С‡РёРє C#В» 
+//Р—Р°РґР°РЅРёРµ в„–1
+//РџСЂРѕРіСЂР°РјРјР° РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё С‚РµРєСЃС‚Р°
 
-//Пространства имен
-using System;//Здесь содержится набор основных классов, и мы здесь создаем свой класс
-using System.Windows.Forms;//Для работы с формами
-using System.Drawing;//Доступ к основным функциям GDI
-using System.IO;//Системный ввод вывод (работа с файлами)
-using System.Text;//Для Encoding
+//РџСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ
+using System;//Р—РґРµСЃСЊ СЃРѕРґРµСЂР¶РёС‚СЃСЏ РЅР°Р±РѕСЂ РѕСЃРЅРѕРІРЅС‹С… РєР»Р°СЃСЃРѕРІ, Рё РјС‹ Р·РґРµСЃСЊ СЃРѕР·РґР°РµРј СЃРІРѕР№ РєР»Р°СЃСЃ
+using System.Windows.Forms;//Р”Р»СЏ СЂР°Р±РѕС‚С‹ СЃ С„РѕСЂРјР°РјРё
+using System.Drawing;//Р”РѕСЃС‚СѓРї Рє РѕСЃРЅРѕРІРЅС‹Рј С„СѓРЅРєС†РёСЏРј GDI
+using System.IO;//РЎРёСЃС‚РµРјРЅС‹Р№ РІРІРѕРґ РІС‹РІРѕРґ (СЂР°Р±РѕС‚Р° СЃ С„Р°Р№Р»Р°РјРё)
+using System.Text;//Р”Р»СЏ Encoding
 
 class MyForm : AppForm 
 {
     // Satisfies rule: MarkWindowsFormsEntryPointsWithStaThread.
-    [STAThread]//Однопоточное приложение
+    [STAThread]//РћРґРЅРѕРїРѕС‚РѕС‡РЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ
     public static void Main()
 	{
 		Application.Run(new MyForm());
@@ -21,14 +21,14 @@ class MyForm : AppForm
 
 class AppForm : Form
 {
-	private myTextBox tbMinNumOfLetters;//Элемент ввода минимального количества букв в словах
-	private CheckBox cbPunctuationMarks;//Элемент выбора удаления знаков препинания	
+	private myTextBox tbMinNumOfLetters;//Р­Р»РµРјРµРЅС‚ РІРІРѕРґР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° Р±СѓРєРІ РІ СЃР»РѕРІР°С…
+	private CheckBox cbPunctuationMarks;//Р­Р»РµРјРµРЅС‚ РІС‹Р±РѕСЂР° СѓРґР°Р»РµРЅРёСЏ Р·РЅР°РєРѕРІ РїСЂРµРїРёРЅР°РЅРёСЏ	
 
 	public AppForm()
 	{
-		Text="Программа обработки текста";//Заголовок окна программы
+		Text="РџСЂРѕРіСЂР°РјРјР° РѕР±СЂР°Р±РѕС‚РєРё С‚РµРєСЃС‚Р°";//Р—Р°РіРѕР»РѕРІРѕРє РѕРєРЅР° РїСЂРѕРіСЂР°РјРјС‹
 
-		//Меню пограммы
+		//РњРµРЅСЋ РїРѕРіСЂР°РјРјС‹
 		MainMenu mnuFileMenu = new MainMenu();
 		this.Menu = mnuFileMenu;
 		MenuItem MenuItemFile = new MenuItem("&File");
@@ -36,15 +36,15 @@ class AppForm : Form
 		MenuItemFile.MenuItems.Add("E&xit",new System.EventHandler(this.MenuExit_Click));
 		mnuFileMenu.MenuItems.Add(MenuItemFile);
 		
-		//Метка для элемента ввода минимального количества букв в словах
+		//РњРµС‚РєР° РґР»СЏ СЌР»РµРјРµРЅС‚Р° РІРІРѕРґР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° Р±СѓРєРІ РІ СЃР»РѕРІР°С…
 		Label labelMinNumOfLetters = new Label();
-		labelMinNumOfLetters.Text = "Минимальное количество букв в словах:";
+		labelMinNumOfLetters.Text = "РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ РІ СЃР»РѕРІР°С…:";
 		labelMinNumOfLetters.Location = new Point(15,15);
 		labelMinNumOfLetters.AutoSize=true;
 		labelMinNumOfLetters.TextAlign=ContentAlignment.BottomLeft;
 		this.Controls.Add(labelMinNumOfLetters);
 
-		//Элемент ввода минимального количества букв в словах
+		//Р­Р»РµРјРµРЅС‚ РІРІРѕРґР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° Р±СѓРєРІ РІ СЃР»РѕРІР°С…
 		tbMinNumOfLetters=new myTextBox();
 		tbMinNumOfLetters.Text = "3";
 		tbMinNumOfLetters.Location=new Point(17+labelMinNumOfLetters.Width,15);
@@ -53,129 +53,129 @@ class AppForm : Form
 		tbMinNumOfLetters.TextAlign=HorizontalAlignment.Right;
 		this.Controls.Add(tbMinNumOfLetters);
 
-		//Метка для элемента выбора удаления знаков препинания
+		//РњРµС‚РєР° РґР»СЏ СЌР»РµРјРµРЅС‚Р° РІС‹Р±РѕСЂР° СѓРґР°Р»РµРЅРёСЏ Р·РЅР°РєРѕРІ РїСЂРµРїРёРЅР°РЅРёСЏ
 		Label labelPunctuationMarks = new Label();
-		labelPunctuationMarks.Text = "Удалить знаки препинания:";
+		labelPunctuationMarks.Text = "РЈРґР°Р»РёС‚СЊ Р·РЅР°РєРё РїСЂРµРїРёРЅР°РЅРёСЏ:";
 		labelPunctuationMarks.Location = new Point(15,17+tbMinNumOfLetters.Height);
 		labelPunctuationMarks.AutoSize=true;
 		labelPunctuationMarks.TextAlign=ContentAlignment.BottomLeft;
 		this.Controls.Add(labelPunctuationMarks);
 
-		//Элемент выбора удаления знаков препинания
+		//Р­Р»РµРјРµРЅС‚ РІС‹Р±РѕСЂР° СѓРґР°Р»РµРЅРёСЏ Р·РЅР°РєРѕРІ РїСЂРµРїРёРЅР°РЅРёСЏ
 		cbPunctuationMarks=new CheckBox();
 		cbPunctuationMarks.Location = new Point(17+labelPunctuationMarks.Width,17+tbMinNumOfLetters.Height);
 		this.Controls.Add(cbPunctuationMarks);
 	}
 
-	//Получить минимальное количество букв в словах
+	//РџРѕР»СѓС‡РёС‚СЊ РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ РІ СЃР»РѕРІР°С…
 	public int getMinNumOfLetters()
 	{
 		return Convert.ToInt32(tbMinNumOfLetters.Text);
 	}
 
-	//Получить признак выбора удаления знаков препинания
+	//РџРѕР»СѓС‡РёС‚СЊ РїСЂРёР·РЅР°Рє РІС‹Р±РѕСЂР° СѓРґР°Р»РµРЅРёСЏ Р·РЅР°РєРѕРІ РїСЂРµРїРёРЅР°РЅРёСЏ
 	public CheckState getDelPunctuationMarks()
 	{
 		return cbPunctuationMarks.CheckState;
 	}
 	
-	//При выборе меню File\Open
+	//РџСЂРё РІС‹Р±РѕСЂРµ РјРµРЅСЋ File\Open
 	private void MenuOpen_Click(Object sender, EventArgs e)
 	{
-		OpenFileDialog ofd = new OpenFileDialog();//Создание объекта стандартного диалога открытия файла 
-		ofd.Title = "Входной текст" ;//Заголовок диалога открытия файла
-		//ofd.Filter = "All files (*.*)|*.*|Text (*.txt)|*.txt" ;//Фильтры типов файлов
-		ofd.Multiselect=true;//Допускается выбор нескольких файлов
-		if( ofd.ShowDialog() == DialogResult.OK)//Показать диалог, и если файлы выбраны
+		OpenFileDialog ofd = new OpenFileDialog();//РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° СЃС‚Р°РЅРґР°СЂС‚РЅРѕРіРѕ РґРёР°Р»РѕРіР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° 
+		ofd.Title = "Р’С…РѕРґРЅРѕР№ С‚РµРєСЃС‚" ;//Р—Р°РіРѕР»РѕРІРѕРє РґРёР°Р»РѕРіР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
+		//ofd.Filter = "All files (*.*)|*.*|Text (*.txt)|*.txt" ;//Р¤РёР»СЊС‚СЂС‹ С‚РёРїРѕРІ С„Р°Р№Р»РѕРІ
+		ofd.Multiselect=true;//Р”РѕРїСѓСЃРєР°РµС‚СЃСЏ РІС‹Р±РѕСЂ РЅРµСЃРєРѕР»СЊРєРёС… С„Р°Р№Р»РѕРІ
+		if( ofd.ShowDialog() == DialogResult.OK)//РџРѕРєР°Р·Р°С‚СЊ РґРёР°Р»РѕРі, Рё РµСЃР»Рё С„Р°Р№Р»С‹ РІС‹Р±СЂР°РЅС‹
 		{
-			string[] tempOutFileNames;//Массив путей к сохраненным временным выходным файлам
-			tempOutFileNames=processText(ofd.FileNames);	//Обработка входных файлов и сохранение результата во
-								                            //временные файлы с именами "..._temp"
-			SaveFileDialog sfd=new SaveFileDialog();//Создание объекта стандартного диалога сохранения файла
-			// Сохранение результата обработки текстовых файлов
-        	for(int i=0; i<ofd.SafeFileNames.Length; i++)//По всем именам входных файлов не включая путей
+			string[] tempOutFileNames;//РњР°СЃСЃРёРІ РїСѓС‚РµР№ Рє СЃРѕС…СЂР°РЅРµРЅРЅС‹Рј РІСЂРµРјРµРЅРЅС‹Рј РІС‹С…РѕРґРЅС‹Рј С„Р°Р№Р»Р°Рј
+			tempOutFileNames=processText(ofd.FileNames);	//РћР±СЂР°Р±РѕС‚РєР° РІС…РѕРґРЅС‹С… С„Р°Р№Р»РѕРІ Рё СЃРѕС…СЂР°РЅРµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РІРѕ
+								                            //РІСЂРµРјРµРЅРЅС‹Рµ С„Р°Р№Р»С‹ СЃ РёРјРµРЅР°РјРё "..._temp"
+			SaveFileDialog sfd=new SaveFileDialog();//РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° СЃС‚Р°РЅРґР°СЂС‚РЅРѕРіРѕ РґРёР°Р»РѕРіР° СЃРѕС…СЂР°РЅРµРЅРёСЏ С„Р°Р№Р»Р°
+			// РЎРѕС…СЂР°РЅРµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РѕР±СЂР°Р±РѕС‚РєРё С‚РµРєСЃС‚РѕРІС‹С… С„Р°Р№Р»РѕРІ
+        	for(int i=0; i<ofd.SafeFileNames.Length; i++)//РџРѕ РІСЃРµРј РёРјРµРЅР°Рј РІС…РѕРґРЅС‹С… С„Р°Р№Р»РѕРІ РЅРµ РІРєР»СЋС‡Р°СЏ РїСѓС‚РµР№
         	{
-            	//Заголовок диалога сохранения файла
-				sfd.Title = "Сохранить результат обработки файла "+ofd.SafeFileNames[i];
-				if( sfd.ShowDialog() == DialogResult.OK)//Показать диалог, и если имена файлов выбраны
+            	//Р—Р°РіРѕР»РѕРІРѕРє РґРёР°Р»РѕРіР° СЃРѕС…СЂР°РЅРµРЅРёСЏ С„Р°Р№Р»Р°
+				sfd.Title = "РЎРѕС…СЂР°РЅРёС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚ РѕР±СЂР°Р±РѕС‚РєРё С„Р°Р№Р»Р° "+ofd.SafeFileNames[i];
+				if( sfd.ShowDialog() == DialogResult.OK)//РџРѕРєР°Р·Р°С‚СЊ РґРёР°Р»РѕРі, Рё РµСЃР»Рё РёРјРµРЅР° С„Р°Р№Р»РѕРІ РІС‹Р±СЂР°РЅС‹
 				{
-					//Копирует временный файл в заданный пользователем
+					//РљРѕРїРёСЂСѓРµС‚ РІСЂРµРјРµРЅРЅС‹Р№ С„Р°Р№Р» РІ Р·Р°РґР°РЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 					File.Copy(tempOutFileNames[i], sfd.FileName, true);
 				}
 			}
-			//Удаляем временные файлы
-			for(int i=0; i<tempOutFileNames.Length; i++)//По всем именам временных файлов
+			//РЈРґР°Р»СЏРµРј РІСЂРµРјРµРЅРЅС‹Рµ С„Р°Р№Р»С‹
+			for(int i=0; i<tempOutFileNames.Length; i++)//РџРѕ РІСЃРµРј РёРјРµРЅР°Рј РІСЂРµРјРµРЅРЅС‹С… С„Р°Р№Р»РѕРІ
         	{
 				File.Delete(tempOutFileNames[i]);
 			}
 		}
 	}
 
-	//При выборе меню File\Exit
+	//РџСЂРё РІС‹Р±РѕСЂРµ РјРµРЅСЋ File\Exit
 	private void MenuExit_Click(Object sender, EventArgs e)
 	{
    		Application.Exit();
 	}
 
-	//Функция обработки и сохранения текста
+	//Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё Рё СЃРѕС…СЂР°РЅРµРЅРёСЏ С‚РµРєСЃС‚Р°
 	public string[] processText(string[] inFileNames)
 	{
         Encoding enc = Encoding.GetEncoding(1251);
-        //Минимальное количество символов в слове
+        //РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РІ СЃР»РѕРІРµ
 		int minChars=getMinNumOfLetters();
-		//Проверка необходимости удаления знаков препинания
+		//РџСЂРѕРІРµСЂРєР° РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё СѓРґР°Р»РµРЅРёСЏ Р·РЅР°РєРѕРІ РїСЂРµРїРёРЅР°РЅРёСЏ
 		bool delPunct=(getDelPunctuationMarks()==CheckState.Checked)? true: false;
-		FileStream fsIn;//Поток очередного входного файла
-		StreamReader r;//Объект для чтения входного потока
+		FileStream fsIn;//РџРѕС‚РѕРє РѕС‡РµСЂРµРґРЅРѕРіРѕ РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
+		StreamReader r;//РћР±СЉРµРєС‚ РґР»СЏ С‡С‚РµРЅРёСЏ РІС…РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР°
 		string[] tempOutFileNames=new string[inFileNames.Length];			
-		FileStream fsOut ;//Поток очередного выходного файла
-		StreamWriter w;//Объект для записи выходного потока
-		string CurWord;//Текущее слово, читаемое из входного файла
-		int charsInCurWord;//Зафиксированное текущее количество букв и цифр в текущем слове
-		char c;//прочитанный из текущего входного файла текущий символ
+		FileStream fsOut ;//РџРѕС‚РѕРє РѕС‡РµСЂРµРґРЅРѕРіРѕ РІС‹С…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
+		StreamWriter w;//РћР±СЉРµРєС‚ РґР»СЏ Р·Р°РїРёСЃРё РІС‹С…РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР°
+		string CurWord;//РўРµРєСѓС‰РµРµ СЃР»РѕРІРѕ, С‡РёС‚Р°РµРјРѕРµ РёР· РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
+		int charsInCurWord;//Р—Р°С„РёРєСЃРёСЂРѕРІР°РЅРЅРѕРµ С‚РµРєСѓС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ Рё С†РёС„СЂ РІ С‚РµРєСѓС‰РµРј СЃР»РѕРІРµ
+		char c;//РїСЂРѕС‡РёС‚Р°РЅРЅС‹Р№ РёР· С‚РµРєСѓС‰РµРіРѕ РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р° С‚РµРєСѓС‰РёР№ СЃРёРјРІРѕР»
 		CurWord="";
 		charsInCurWord=0;
-		for(int i=0; i<inFileNames.Length; i++)//По всем именам входных файлов
+		for(int i=0; i<inFileNames.Length; i++)//РџРѕ РІСЃРµРј РёРјРµРЅР°Рј РІС…РѕРґРЅС‹С… С„Р°Р№Р»РѕРІ
         {
-			fsIn = new FileStream(inFileNames[i], FileMode.Open, FileAccess.Read);//Поток очередного входного файла
+			fsIn = new FileStream(inFileNames[i], FileMode.Open, FileAccess.Read);//РџРѕС‚РѕРє РѕС‡РµСЂРµРґРЅРѕРіРѕ РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
             r = new StreamReader(fsIn, enc);
 			tempOutFileNames[i]=inFileNames[i]+"_temp";
 			fsOut = new FileStream(tempOutFileNames[i], FileMode.OpenOrCreate, FileAccess.Write);
             w = new StreamWriter(fsOut, enc);
-			while (r.Peek() >= 0)//пока не конец входного файла (-1)
+			while (r.Peek() >= 0)//РїРѕРєР° РЅРµ РєРѕРЅРµС† РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р° (-1)
             {
                 c=(char)r.Read();
-				if(!(Char.IsPunctuation(c) || Char.IsSeparator(c) || Char.IsControl(c)))//если символ - часть слова
+				if(!(Char.IsPunctuation(c) || Char.IsSeparator(c) || Char.IsControl(c)))//РµСЃР»Рё СЃРёРјРІРѕР» - С‡Р°СЃС‚СЊ СЃР»РѕРІР°
 				{
 					CurWord+=c.ToString();
 					charsInCurWord++;
 				}
-				else//если знак препинания, разделитель или управляющий символ
+				else//РµСЃР»Рё Р·РЅР°Рє РїСЂРµРїРёРЅР°РЅРёСЏ, СЂР°Р·РґРµР»РёС‚РµР»СЊ РёР»Рё СѓРїСЂР°РІР»СЏСЋС‰РёР№ СЃРёРјРІРѕР»
 				{
 					if(charsInCurWord>=minChars)
 					{
-						w.Write(CurWord);//Запись считанного длинного слова в выходной файл
+						w.Write(CurWord);//Р—Р°РїРёСЃСЊ СЃС‡РёС‚Р°РЅРЅРѕРіРѕ РґР»РёРЅРЅРѕРіРѕ СЃР»РѕРІР° РІ РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р»
 					}
-					//либо знаки препинания не удаляются, либо считанный символ - не знак препинания
+					//Р»РёР±Рѕ Р·РЅР°РєРё РїСЂРµРїРёРЅР°РЅРёСЏ РЅРµ СѓРґР°Р»СЏСЋС‚СЃСЏ, Р»РёР±Рѕ СЃС‡РёС‚Р°РЅРЅС‹Р№ СЃРёРјРІРѕР» - РЅРµ Р·РЅР°Рє РїСЂРµРїРёРЅР°РЅРёСЏ
 					if(!(Char.IsPunctuation(c) && delPunct))
 					{
-						w.Write(c);//Запись считанного символа в выходной файл				
+						w.Write(c);//Р—Р°РїРёСЃСЊ СЃС‡РёС‚Р°РЅРЅРѕРіРѕ СЃРёРјРІРѕР»Р° РІ РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р»				
 					}
-					//Подготовка к чтению следующего слова
+					//РџРѕРґРіРѕС‚РѕРІРєР° Рє С‡С‚РµРЅРёСЋ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃР»РѕРІР°
 					CurWord="";
 					charsInCurWord=0;
 				}
 				
             }
-			//Запись последнего длинного считанного слова
+			//Р—Р°РїРёСЃСЊ РїРѕСЃР»РµРґРЅРµРіРѕ РґР»РёРЅРЅРѕРіРѕ СЃС‡РёС‚Р°РЅРЅРѕРіРѕ СЃР»РѕРІР°
 			if(charsInCurWord>=minChars)
 			{
 				w.Write(CurWord);
 			}
-			//Подготовка к чтению следующего файла
+			//РџРѕРґРіРѕС‚РѕРІРєР° Рє С‡С‚РµРЅРёСЋ СЃР»РµРґСѓСЋС‰РµРіРѕ С„Р°Р№Р»Р°
 			CurWord="";
 			charsInCurWord=0;
-			w.Flush();//Очищает буферы и записывает их в устройство
+			w.Flush();//РћС‡РёС‰Р°РµС‚ Р±СѓС„РµСЂС‹ Рё Р·Р°РїРёСЃС‹РІР°РµС‚ РёС… РІ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ
 			w.Close();
 			fsOut.Close();
 			r.Close();
@@ -185,10 +185,10 @@ class AppForm : Form
 	}
 }
 
-//Класс с возможностью отслеживания ввода чисел 
+//РљР»Р°СЃСЃ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ РѕС‚СЃР»РµР¶РёРІР°РЅРёСЏ РІРІРѕРґР° С‡РёСЃРµР» 
 class myTextBox : TextBox
 {
-	//Перегрузка функции обработки события изменения текста в TextBox
+	//РџРµСЂРµРіСЂСѓР·РєР° С„СѓРЅРєС†РёРё РѕР±СЂР°Р±РѕС‚РєРё СЃРѕР±С‹С‚РёСЏ РёР·РјРµРЅРµРЅРёСЏ С‚РµРєСЃС‚Р° РІ TextBox
 	protected override void OnTextChanged(EventArgs e)
 	{
 		string s=getMyTBStr();
@@ -196,13 +196,13 @@ class myTextBox : TextBox
 		{
 			if(s[i]<'0' || s[i]>'9')
 			{
-				MessageBox.Show("Введите неотрицательное целое число","Минимальное количество букв в словах");
+				MessageBox.Show("Р’РІРµРґРёС‚Рµ РЅРµРѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ С†РµР»РѕРµ С‡РёСЃР»Рѕ","РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ РІ СЃР»РѕРІР°С…");
 				this.Text="";
 			}
 		}		
 	}
 
-	//Получить текст в поле ввода минимального количества букв в словах
+	//РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСЃС‚ РІ РїРѕР»Рµ РІРІРѕРґР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° Р±СѓРєРІ РІ СЃР»РѕРІР°С…
 	public string getMyTBStr()
 	{
 		return this.Text;
